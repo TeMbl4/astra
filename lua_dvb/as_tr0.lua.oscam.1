@@ -1,0 +1,52 @@
+log.set({ filename = "/var/log/astra_3.log", stdout = false })
+require("stream")
+adapter_3 = dvb_tune({
+    type = "S2",
+    adapter = 3,
+    modulation = "PSK8",
+    fec = "3/4",
+    tp = "11400:v:13846",
+    lnb = "9750:10600:11700",
+    lnb_sharing = false
+})
+
+
+localcam_1225 = newcamd({
+    name = "localcam_1225",
+    host = "127.0.0.1", port = 8122,
+    user = "adapter_3_sid_1225", pass = "5d93f5c2",
+    key = "cb5c86bef024457742a90141e9af",
+    disable_emm = false
+})
+
+localcam_3110 = newcamd({
+    name = "localcam_3110",
+    host = "127.0.0.1", port = 8122,
+    user = "adapter_3_sid_3110", pass = "c30cd301",
+    key = "cb5c86bef024457742a90141e9af",
+    disable_emm = false
+})
+
+make_channel({
+    name = "ELRODI",
+    input = {
+        "dvb://adapter_3#pnr=1225",
+        "dvb://adapter_3#pnr=1225&cam=localcam_1225"
+    },
+    output = {
+        "http://:8003/1225",
+        "udp://127.0.0.1:9024"
+    }
+})
+
+make_channel({
+    name = "RTV21 PLUS",
+    input = {
+        "dvb://adapter_3#pnr=3110",
+        "dvb://adapter_3#pnr=3110&cam=localcam_3110"
+    },
+    output = {
+        "http://:8003/3110",
+        "udp://127.0.0.1:9028"
+    }
+})

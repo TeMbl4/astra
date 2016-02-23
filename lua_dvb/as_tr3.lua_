@@ -1,0 +1,22 @@
+package.path = "/opt/astra/scripts/?.lua"
+log.set({ filename = "/opt/astra/log/astra_3.log", stdout = false })
+require("stream")
+adapter_3 = dvb_tune({
+	type = "T",
+	adapter = 3,
+	frequency = 714,
+	bandwidth = "8mhz",
+	hierarchy = "NONE",
+	modulation = "QAM64"
+})
+
+make_channel({
+    name = " Top Channel HD",
+    input = {
+        "dvb://adapter_3#pnr=900"
+    },
+    output = {
+        "http://:8003/900",
+		"udp://127.0.0.1:9022"
+    }
+})

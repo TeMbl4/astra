@@ -1,0 +1,33 @@
+log.set({ filename = "/var/log/astra_5.log", stdout = false })
+require("stream")
+adapter_5 = dvb_tune({
+    type = "S2",
+    adapter = 5,
+    modulation = "PSK8",
+    fec = "3/4",
+    tp = "11427:v:27500",
+    lnb = "9750:10600:11700",
+    lnb_sharing = false
+})
+
+
+localcam_9 = newcamd({
+    name = "localcam_9",
+    host = "127.0.0.1", port = 8122,
+    user = "adapter_5_sid_9", pass = "142c7280",
+    key = "cb5c86bef024457742a90141e9af",
+    disable_emm = false
+})
+
+make_channel({
+    name = "Tring Tring",
+    input = {
+        "dvb://adapter_5#pnr=9",
+        "dvb://adapter_5#pnr=9&cam=localcam_9"
+    },
+    output = {
+        "http://:8005/9",
+        "udp://127.0.0.1:9011"
+    }
+})
+

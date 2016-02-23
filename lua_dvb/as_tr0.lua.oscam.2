@@ -1,0 +1,49 @@
+log.set({ filename = "/var/log/astra_4.log", stdout = false })
+require("stream")
+adapter_4 = dvb_tune({
+    type = "S",
+    adapter = 4,
+    modulation = "QPSK",
+    tp = "10721:h:27500",
+    lnb = "9750:10600:11700",
+    lnb_sharing = false
+})
+
+
+localcam_1501 = newcamd({
+    name = "localcam_1501",
+    host = "127.0.0.1", port = 8122,
+    user = "adapter_4_sid_1501", pass = "62d3377d",
+    key = "cb5c86bef024457742a90141e9af",
+    disable_emm = false
+})
+
+localcam_1503 = newcamd({
+    name = "localcam_1503",
+    host = "127.0.0.1", port = 8122,
+    user = "adapter_4_sid_1503", pass = "dadcf360",
+    key = "cb5c86bef024457742a90141e9af",
+    disable_emm = false
+})
+
+make_channel({
+    name = "SLO-TV1",
+    input = {
+        "dvb://adapter_4#pnr=1501"
+    },
+    output = {
+        "http://:8004/1501",
+        "udp://127.0.0.1:9031"
+    }
+})
+
+make_channel({
+    name = "SLO-TV3",
+    input = {
+        "dvb://adapter_4#pnr=1503"
+    },
+    output = {
+        "http://:8004/1503",
+        "udp://127.0.0.1:9033"
+    }
+})

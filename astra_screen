@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+ASTRA=/usr/bin/astra
+PREFIX=/opt/astra
+COUNT=0
+
+for i in $PREFIX/config/*.lua
+do
+    echo "screen -d -m -L -S astra$COUNT $ASTRA $i"
+    screen -d -m -L -S astra$COUNT $ASTRA $i
+    ((COUNT++))
+done

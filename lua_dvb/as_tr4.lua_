@@ -1,0 +1,26 @@
+package.path = "/opt/astra/scripts/?.lua"
+log.set({ filename = "/opt/astra/log/astra_4.log", stdout = false })
+require("stream")
+adapter_6 = dvb_tune({
+	type = "T",
+	t2 = "true",
+        device = "0",
+	adapter = 6,
+	frequency = 746,
+	bandwidth = "8mhz",
+	hierarchy = "NONE",
+	modulation = "QAM64"
+})
+
+make_channel({
+    name = "Ora NEWS HD",
+    type = "spts",
+    enable = "true",
+    stream_id = 1,
+    input = {
+        "dvb://adapter_6#pnr=1"
+    },
+    output = {
+	"http://127.0.0.1:20003/1"
+    }
+})

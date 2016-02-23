@@ -1,0 +1,31 @@
+log.set({ filename = "/var/log/astra_0.log", stdout = false })
+require("stream")
+adapter_0 = dvb_tune({
+    type = "S",
+    adapter = 0,
+    modulation = "QPSK",
+    fec = "1/2",
+    tp = "12633:v:4883",
+    lnb = "9750:10600:11700",
+    lnb_sharing = false
+})
+
+
+localcam_1 = newcamd({
+    name = "localcam_1",
+    host = "127.0.0.1", port = 8122,
+    user = "adapter_0_sid_1", pass = "1fef8c0f",
+    key = "cb5c86bef024457742a90141e9af",
+    disable_emm = false
+})
+
+make_channel({
+    name = "RTK-SAT",
+    input = {
+        "dvb://adapter_0#pnr=1"
+    },
+    output = {
+        "http://:8000/1",
+        "udp://127.0.0.1:9001"
+    }
+})

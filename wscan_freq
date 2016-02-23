@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+echo "-----Read for help-----"
+echo "=====man w_scan====="
+echo "=====w_scan -h====="
+echo "=====w_scan --help====="
+
+echo "Stopping all astra process"
+killall -9 astra
+echo "Stopping all w_scan process"
+killall -9 w_scan
+
+echo ""
+echo ""
+
+ADAPTER=`dmesg | grep front | awk '{print $6}'`
+
+for i in $ADAPTER
+do
+	echo "Starting for adapter=${i}"
+	w_scan -c US -C UTF-8 -x -a /dev/dvb/adapter${i}/frontend0 -G > adapter${i}.conf &
+done
+
+
