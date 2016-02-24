@@ -1,0 +1,48 @@
+package.path = "/etc/astra/lua/?.lua"
+log.set({ filename = "/var/log/astra/astra.log", stdout = false })
+
+require("websocket");
+require("dvbls")
+require("base")
+require("stream")
+
+adapter_1 = dvb_tune({
+        type = "T",
+        enable = true,
+        t2 = true,
+        frequency = "746",
+        name = "A1:0_Eutelsat_10815H",
+        bandwidth = "8MHZ",
+        device = 0,
+        id = "a01d",
+        modulation = "QAM64",
+        adapter = 4
+})
+
+-- [=[ adapter_4 = dvb_tune({
+        type = "T",
+        enable = true,
+        t2 = true,
+        frequency = "746",
+        name = "A4_ORA_NEWS",
+        bandwidth = "8MHZ",
+        device = 0,
+        id = "a01d",
+        modulation = "QAM64",
+        adapter = 4
+}) ]=] --
+
+
+make_channel({
+	type = "spts",
+	id = "a00i",
+	http_keep_active = "-1",
+	input = {
+		"dvb://a002#pnr=17315"
+	},
+	name = "Fashion ONE",
+	enable = "true",
+	output = {
+		"http://208.49.220.249:20033/Fashionone"
+	}
+})

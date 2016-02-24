@@ -1,8 +1,5 @@
 
--- local server_addr = "127.0.0.1"
--- local server_addr = "0.0.0.0"
--- local server_addr = "208.49.220.249"
-local server_addr = ""
+local server_addr = "127.0.0.1"
 local server_port = 8000
 
 local index_html =

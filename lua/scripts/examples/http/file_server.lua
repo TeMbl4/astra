@@ -2,7 +2,7 @@
 local server_addr = "127.0.0.1"
 local server_port = 8000
 
-mime = 
+mime =
 {
     ["html"] = "text/html",
     ["js"]   = "application/javascript",
