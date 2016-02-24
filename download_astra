@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+ASTRA_HOME=/opt/setplex/astra
+ASTRA_BIN=$ASTRA_HOME/bin
+#ASTRA_CONF=$ASTRA_HOME/conf
+#ASTRA_LOG=$ASTRA_HOME/logs
+ASTRA_INIT=$ASTRA_BIN/astra
+#ASTRA_PID=/var/run
+
+#function run_astra {
+#	if [ -d $ASTRA_CONF ] 
+#	then
+#		$ASTRA_INIT -c $ASTRA_CONF/astra.json -p 8000 --daemon --pid=$ASTRA_PID/astra.pid
+#	else
+#		mkdir $ASTRA_CONF
+#		#$ASTRA_INIT -c $ASTRA_CONF/astra.json -p 8000
+#	fi
+#}
+
+if [ ! -f $ASTRA_INIT ]
+then
+#	run_astra
+#else
+	wget  http://cesbo.com/download/astra/current/x86/linux-64bit/astra -O $ASTRA_BIN/astra
+	chmod +x $ASTRA_BIN/astra
+fi
+
